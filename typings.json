@@ -4,9 +4,9 @@
   "homepage": "https://github.com/iarna/are-we-there-yet",
   "version": "1.1.2",
   "devDependencies": {
-    "blue-tape": "registry:npm/blue-tape#0.1.0+20160322235613"
+    "blue-tape": "registry:npm/blue-tape#0.2.0+20160418015423"
   },
-  "ambientDevDependencies": {
-    "node": "registry:dt/node#4.0.0+20160319033040"
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160423143914"
   }
 }
