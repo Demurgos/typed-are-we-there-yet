@@ -9,7 +9,7 @@ import {Transform, TransformOptions} from 'stream';
  * All tracker objects described below have the following methods, they, along with the event comprise the interface
  * for consumers of tracker objects.
  */
-class TrackerBase extends EventEmitter {
+class TrackerBase extends EventEmitter implements TrackerEmitter {
   /**
    * var completed = tracker.completed()
    *
@@ -30,7 +30,6 @@ class TrackerBase extends EventEmitter {
   finish(): void;
 }
 
-// TODO: How do we manage events ?
 /**
  * Events
  *
@@ -42,6 +41,16 @@ class TrackerBase extends EventEmitter {
  * completed is the percent complete (as returned by tracker.completed() method).
  * tracker is the tracker object that you are listening for events on.
  */
+interface TrackerEmitter extends EventEmitter {
+  addListener (event: "change", listener: (name?: string, completed?: number, tracker?: TrackerGroup) => any): this;
+  addListener (event: string, listener: Function): this;
+
+  on (event: 'change', listener: (name?: string, completed?: number, tracker?: this) => any):  this;
+  on (event: string, listener: Function): this;
+
+  once (event: "change", listener: (name?: string, completed?: number, tracker?: TrackerGroup) => any): this;
+  once (event: string, listener: Function): this;
+}
 
 /**
  * TrackerGroup
@@ -170,7 +179,7 @@ export class Tracker extends TrackerBase {
 /**
  * TrackerStream
  */
-export class TrackerStream extends Transform {
+export class TrackerStream extends Transform implements TrackerEmitter {
   /**
    * var tracker = new TrackerStream(name, size, options)
    *
